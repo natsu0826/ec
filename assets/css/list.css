@@ -1,0 +1,136 @@
+body {
+  padding: 5% 10%;
+    margin: 0 auto;
+  }
+  .list-container {
+    padding: 50px;
+    list-style-type: none;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  .item-img {
+    width: 60%;
+  }
+  img {
+    width: 100%;
+  }
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  p {
+    margin: 0;
+  }
+  #stage {
+    margin-bottom: 60px;
+  }
+  .function {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  #sort {
+    margin-right: 30px;
+  }
+  .personItem {
+    border-bottom: solid 1px #ccc;
+    padding: 30px;
+  }
+  .personItem:nth-of-type(1) {
+    border-top: solid 1px #ccc;
+  }
+  .personInfo {
+    display: flex;
+  }
+  .rating {
+    margin-left: 20px;
+    font-size: 18px;
+  }
+  .personItem-defo {
+    text-align: right;
+  }
+  
+  .reason {
+    margin-top: 10px;
+  }
+  .age {
+    margin-left: 20px;
+  }
+  .stars {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .stars span {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+  }
+  
+  .stars input[type="radio"] {
+    display: none;
+  }
+  
+  .stars label {
+    color: #d2d2d2;
+    font-size: 30px;
+    padding: 0 5px;
+  }
+  h3 {
+    padding-top: 40px;
+  }
+  .personItem-defo {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  .created_at {
+    text-align: right;
+  }
+  
+  
+  .detacretebox {
+    display: flex;
+    padding: inherit;
+    justify-content: end;
+  }
+  
+  .edit, .delete{
+  border : solid 1px #444;
+  padding: 5px;
+  border-radius: 3px;
+  
+  }
+  
+  a:hover{
+    color: rgb(214, 225, 243);
+  }
+  
+  a {
+    text-decoration: none;
+    color: #333;
+  }
+  .sortfilter-container{
+    padding: 50px;
+  }
+  
+  .itemdeta{
+    font-size: 20px;
+  }
+.basket{
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #a50606;
+  font-size: 14px;
+  font-weight: bold;
+  text-decoration: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
+.basket a{
+  color: #fff;
+}

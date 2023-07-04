@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <title>list</title>
+        <link rel="stylesheet" href="/css/list.css">
+    </head>
+    <body>
+        <ul class="list-container">
+            <% itemlist.forEach(function(item) { %>
+                <li class="list">
+                    <%= item.itemname %>
+                        <% item.images.forEach(function(image) { %>
+                            <div class="item-img">
+                                <img src="<%= image %>">
+                            </div>
+                            <% }); %>
+                </li>
+                <% }); %>
+        </ul>
+        <div class="itemdeta">
+            <p class="itemdeta"><%= itemlist[0].prices%>円</p>
+        </div>
+        <a href="/create?item=<%= itemlist[0].item %>">
+        <a href="/">トップに戻る</a>
+    </body>
+</html>

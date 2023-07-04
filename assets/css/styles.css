@@ -1,0 +1,42 @@
+@charset "UTF-8";
+
+h2{
+  text-align: center;
+}
+.item{
+width: 100%;
+}
+
+img {
+  width: 200px;
+}
+ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  padding: 0px 200px;
+}
+
+.itemcontainer{
+  padding-top: 100px;
+  margin-right: 0px;
+}
+li {
+  list-style: none;
+}
+.itemcontainer li:hover .item {
+  opacity: 0.5;
+}
+
+a {
+  display: block;
+  text-decoration: none;
+  color: #444;
+}
+
+.itemname{
+  text-align: center;
+}
+.price{
+  text-align: right ;
+}
