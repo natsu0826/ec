@@ -17,7 +17,9 @@
                         <p class="itemname"><%= value.itemname %></p>
                         <img src="<%= value.images.split(",")[0] %>" alt="image">
                       </a>
-                            <p class="price"><%= value.prices %></p>
+                            
+                            <p class="averagerating">平均評価: <%= value.averagerating %></p>
+                            <p class="reviewcount">レビュー数: <%= value.reviewcount %></p>
                         </div>
                     </li>
                     <% }); %>
@@ -25,4 +27,3 @@
         </div>
     </body>
 </html>
-

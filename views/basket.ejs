@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ja">
     <head>
@@ -7,21 +8,23 @@
     </head>
     <body>
         <ul class="list-container">
-            <% itemlist.forEach(function(item) { %>
+            <% itemlist.forEach(function (item) { %>
                 <li class="list">
-                    <%= item.itemname %>
-                        <% item.images.forEach(function(image) { %>
-                            <div class="item-img">
-                                <img src="<%= image %>">
-                            </div>
-                            <% }); %>
+                  <%= item.itemname %>
+                  <%= item.price %>
+                  <%= item.itemcount %>
+                  <% item.images.forEach(function (image) { %>
+                    <div class="item-img">
+                      <img src="<%= image %>">
+                    </div>
+                  <% }); %>
                 </li>
-                <% }); %>
+              <% }); %>
+              
         </ul>
         <div class="itemdeta">
-            <p class="itemdeta"><%= itemlist[0].prices%>円</p>
+            <p>合計金額: <%= total %>円</p>
         </div>
-        <a href="/create?item=<%= itemlist[0].item %>">
         <a href="/">トップに戻る</a>
     </body>
 </html>

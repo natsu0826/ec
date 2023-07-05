@@ -16,7 +16,10 @@
                         </div>
                     <% }); %>
                 </li>
-                <div class="basket"><a href="/basket/<%= item.id %>">購入する</a></div>
+                <form action="/basket/<%= item.itemname %>/add" method="post">
+                    <input type="hidden" name="price" value="<%= item.price %>">
+                    <button class="basket" type="submit">購入</button>
+                </form>
             <% }); %>
         </ul>
         <div class="itemdeta">
