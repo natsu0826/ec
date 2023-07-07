@@ -1,6 +1,7 @@
 body {
   padding: 5% 10%;
     margin: 0 auto;
+    font-size: 18px;
   }
   h2{
     text-align: left;
@@ -47,7 +48,6 @@ body {
   }
   .rating {
     margin-left: 20px;
-    font-size: 18px;
   }
   .personItem-defo {
     text-align: right;
@@ -111,7 +111,7 @@ body {
   }
   
   a:hover{
-    color: rgb(214, 225, 243);
+color: rgb(255, 255, 255);
   }
   
   a {
@@ -122,22 +122,64 @@ body {
     padding: 50px;
   }
   
-  .itemdeta{
-    font-size: 20px;
-  }
-  .basket {
-    display: inline-block;
-    padding: 10px 25px;
-    background-color: #dd4949;
-    font-size: 14px;
-    font-weight: bold;
-    text-decoration: none;
-    border: none;
-    color: #fff;
-    border-radius: 4px;
-    cursor: pointer;
-}
+
 
 .basket a{
   color: #fff;
+}
+.list-container {
+  width: 30%;
+}
+
+.list {
+  display: flex;
+}
+
+.item {
+  width: 30%;
+  padding: 0px 10%;
+}
+
+.item-img {
+  width: 20%;
+  text-align: center;
+}
+.itemdeta{
+  display: flex;
+}
+p.deletes {
+  display: block;
+  border: solid;
+  margin: 0px 0px 20px auto;
+  width: 40px;
+  border-radius: 3px;
+  padding: 6px;
+}
+p {
+  padding: 5px;
+  text-align: initial;}
+.total{
+  font-size: 23px;
+  padding: 100px;
+text-align:end;
+}
+.total span {
+  color: rgb(180, 39, 39);
+}
+.item-total-container {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.itemdeta {
+
+  border-bottom: 1px solid #ccc;
+  padding-top: 10px;
+  margin-top: 10px;
+  width: 70%;
+}
+
+.itemdeta .item {
+  flex-grow: 1;
 }

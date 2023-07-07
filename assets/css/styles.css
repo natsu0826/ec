@@ -1,5 +1,8 @@
 @charset "UTF-8";
 
+body{
+  background-color: #f5e4ec;
+}
 h2{
   text-align: center;
 }
@@ -14,17 +17,27 @@ ul {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
-  padding: 0px 200px;
+  padding: 0px 10px;
+
 }
 
 .itemcontainer{
   padding-top: 100px;
   margin-right: 0px;
 }
+form{
+  width: 90%;
+  text-align: right;
+}
 li {
   list-style: none;
+  padding: 30px;
+  margin: 30px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  color: #757373;  
 }
-.itemcontainer li:hover .item {
+a:hover{
   opacity: 0.5;
 }
 
@@ -34,8 +47,15 @@ a {
   color: #444;
 }
 
+.item-content{
+  padding-top: 100px;
+  width: 90%;
+    margin: auto;
+}
+
 .itemname{
   text-align: center;
+  font-weight: bold;
 }
 .price{
   text-align: right ;

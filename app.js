@@ -14,6 +14,8 @@ app.use(session({
   saveUninitialized: true,
 }));
 
+
+
 app.set('view engine', 'ejs');
 app.use(express.static('assets'));
 app.use(methodOverride("_method"));
@@ -37,6 +39,38 @@ app.get("/list", (req, res) => {
   });
 });
 
+app.get("/create", (req, res) => {
+  const itemname = req.query.itemname;
+
+  const sql = "INSERT INTO review VALUES (?)";
+  const values = [itemname];
+
+  con.query(sql, values, function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+    res.redirect("/list"); // データ保存後にリダイレクトするURLを指定します
+  });
+});
+
+
+
+app.post("/", (req, res) => {
+  const { itemname, userId, content, evaluation} = req.body;
+  
+
+  const sql = "INSERT INTO review (itemname, userId, content, evaluation) VALUES (?, ?, ?, ?)";
+  const values = [itemname, Id, content, evaluation];
+
+  con.query(sql, values, function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+
+    res.redirect("/");
+  });
+});
+
+
+
 app.post("/basket/:itemname/add", (req, res) => {
   const itemname = req.params.itemname;
   const price = req.body.price;
@@ -48,8 +82,7 @@ app.post("/basket/:itemname/add", (req, res) => {
       itemname.images = itemname.itemimage.split(",");
       return itemname;
     });
-
-    // カートに追加する処理を行う（セッションに保存する）
+    // カートに追加（セッションに保存）
     if (!req.session.cart) {
       req.session.cart = [];
     }
@@ -73,6 +106,8 @@ app.get("/basket", (req, res) => {
       cart: cart,
       total: total,
       itemlist: [],
+      itemTotal: itemTotal,
+      itemCounts: {},
     });
   } else {
     const sql = "SELECT * FROM itemlist WHERE itemname IN (?)";
@@ -89,7 +124,6 @@ app.get("/basket", (req, res) => {
         const foundItem = itemlist.find((i) => i.itemname === item.itemname);
         if (foundItem) {
           total += foundItem.price;
-      
           if (itemTotal[item.itemname]) {
             itemTotal[item.itemname] += foundItem.price;
           } else {
@@ -112,12 +146,12 @@ app.get("/basket", (req, res) => {
         itemlist: itemlist,
         itemTotal: itemTotal,
         itemCounts: itemCounts,
-        count: 10 // Replace '10' with the actual count value you want to pass
       });
-      
     });
   }
 });
+
+
 
 
 app.get("/list/:itemname", (req, res) => {
@@ -149,24 +183,61 @@ app.get("/list/:itemname", (req, res) => {
 });
 
 
+app.get("/delete/:id", (req, res) => {
+  const sql = "DELETE FROM review WHERE id = ?"
+  con.query(sql, [req.params.id], function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+    res.redirect("/");
+  });
+});
+
+app.get("/basket/delete/:itemname", (req, res) => {
+  const itemname = req.params.itemname;
+
+  if (req.session.cart) {
+    const index = req.session.cart.findIndex(item => item.itemname === itemname);
+    if (index !== -1) {
+      req.session.cart.splice(index, 1);
+    }
+  }
+
+  res.redirect("/basket");
+});
 
 
 
 app.get("/", (req, res) => {
-  const sql = `
-    SELECT
-      itemlist.itemname,
-      itemlist.price,
-      GROUP_CONCAT(itemlist.itemimage) AS images,
-  ROUND(AVG(review.evaluation), 2) AS averagerating,
-      COUNT(review.evaluation) AS reviewcount
-    FROM
-      itemlist
-    LEFT JOIN
-      review ON itemlist.itemname = review.itemname
-    GROUP BY
-      itemlist.itemname, itemlist.price
-  `;
+  let sql = `
+  SELECT
+    itemlist.itemname,
+    itemlist.price,
+    GROUP_CONCAT(itemlist.itemimage) AS images,
+    COALESCE(ROUND(AVG(review.evaluation), 2), 0) AS averagerating,
+    COALESCE(COUNT(review.evaluation), 0) AS reviewcount
+  FROM
+    itemlist
+  LEFT JOIN
+    review ON itemlist.itemname = review.itemname
+  GROUP BY
+    itemlist.itemname, itemlist.price
+`;
+
+
+  const sortOption = req.query.sort;
+
+  if (sortOption === "priceDesc") {
+    sql += " ORDER BY itemlist.price DESC";
+  } else if (sortOption === "priceAsc") {
+    sql += " ORDER BY itemlist.price ASC";
+  } else if (sortOption === "nameAsc") {
+    sql += " ORDER BY itemlist.itemname ASC";
+  } else if (sortOption === "ratingDesc") {
+    sql += " ORDER BY averagerating DESC";
+  } else if (sortOption === "reviewDesc") {
+    sql += " ORDER BY reviewcount DESC";
+  }
+
   con.query(sql, function (err, result, fields) {
     if (err) throw err;
     res.render("index", { itemlist: result });
