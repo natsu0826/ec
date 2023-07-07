@@ -6,61 +6,65 @@
         <link rel="stylesheet" href="/css/list.css">
     </head>
     <body>
-        <h3><%= itemlist[0].itemname %></h3>
-        <ul class="list-container">
-            <% itemlist.forEach(function(item) { %>
-                <li class="list">
-                    <% item.images.forEach(function(image) { %>
-                        <div class="item-img">
-                            <img src="<%= image %>">
-                        </div>
-                    <% }); %>
-                </li>
-                <div class="basket"><a href="/basket/<%= item.id %>">購入する</a></div>
-            <% }); %>
-        </ul>
         <div class="itemdeta">
-            <p class="itemdeta"><%= itemlist[0].price %>円</p>
-        </div>
-        <div class="sortfilter-container">
-            <label for="sort">並び替え</label>
-            <select id="sort" class="sort-container" onchange="location = '/list/<%= itemlist[0].itemname %>?sort=' + this.value">
-                <option value="1">標準</option>
-                <option value="2">評価が高い順</option>
-                <option value="3">評価が低い順</option>
-            </select>
-        </div>
-        <a href="/create?item=<%= itemlist[0].itemname %>">
-            <button>レビューを書く</button>
-        </a>
-        <ul class="personItem-container">
-            <% review.forEach(function (value) { %>
-                <li class="personItem">
-                    <div class="personItem-defo">
-                        <p class="name"><%= value.userId %>さん</p>
-                    </div>
-                    <div class="review">
-                        <div class="stars">
-                            <span>
-                                <% for (let i = 5; i >= 1; i--) { %>
-                                    <% if (i <= value.evaluation) { %>
-                                        <label for="review<%= i %>" style="color: #F8C601;">★</label>
-                                    <% } else { %>
-                                        <label for="review<%= i %>" style="color: #D2D2D2;">★</label>
+            <h2><%= itemlist[0].itemname %></h2>
+            <ul class="list-container">
+                <% itemlist.forEach(function(item) { %>
+                    <li class="list">
+                        <% if (item && item.images) { %>
+                            <% item.images.forEach(function(image) { %>
+                                <div class="item-img">
+                                    <img src="<%= image %>">
+                                </div>
+                                <% }); %>
                                     <% } %>
+                                        <p class="itemdeta"><%= itemlist[0].price %>円</p>
+                    </li>
+                    <form action="/basket/<%= item.itemname %>/add" method="post">
+                        <input type="hidden" name="price" value="<%= item.price %>">
+                        <button class="basket" type="submit">購入</button>
+                    </form>
+                    <% }); %>
+            </ul>
+            <div class="sortfilter-container">
+                <label for="sort">並び替え</label>
+                <select id="sort" class="sort-container" onchange="location = '/list/<%= itemlist[0].itemname %>?sort=' + this.value">
+                    <option value="1">標準</option>
+                    <option value="2">評価が高い順</option>
+                    <option value="3">評価が低い順</option>
+                </select>
+            </div>
+            <ul class="personItem-container">
+                <% if (review && review.length> 0) { %> <% review.forEach(function (value) { %>
+                        <li class="personItem">
+                            <div class="personItem-defo">
+                                <p class="name"><%= value.userId %>さん</p>
+                            </div>
+                            <div class="review">
+                                <div class="stars">
+                                    <span>
+                                        <% for (let i=5; i>= 1; i--) { %> <% if (i <=value.evaluation) { %>
+                                                <label for="review<%= i %>" style="color: #F8C601;">★</label>
+                                                <% } else { %>
+                                                    <label for="review<%= i %>" style="color: #D2D2D2;">★</label>
+                                                    <% } %>
+                                                        <% } %>
+                                    </span>
+                                    <p class="evaluation"><%= value.evaluation %></p>
+                                </div>
+                            </div>
+                            <p class="reason"><%= value.content %></p>
+                            <div class="detacretebox">
+                                <div class="edit"><a href="/edit/<%= value.id %>">更新</a></div>
+                                <div class="delete"><a href="/delete/<%= value.id %>">削除</a></div>
+                            </div>
+                        </li>
+                        <% }); %>
+                            <% } else { %>
+                                <p>レビューはまだありません。</p>
                                 <% } %>
-                            </span>
-                            <p class="evaluation"><%= value.evaluation %></p>
-                        </div>
-                    </div>
-                    <p class="reason"><%= value.content %></p>
-                    <div class="detacretebox">
-                        <div class="edit"><a href="/edit/<%= value.id %>">更新</a></div>
-                        <div class="delete"><a href="/delete/<%= value.id %>">削除</a></div>
-                    </div>
-                </li>
-            <% }); %>
-        </ul>
-        <a href="/">トップに戻る</a>
+            </ul>
+            <a href="/">&lt;トップに戻る</a>
+        </div>
     </body>
 </html>
